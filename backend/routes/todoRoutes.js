@@ -15,11 +15,14 @@ const verifyToken = (req, res, next) => {
 };
 
 // create a todo
-router.post("/addtodo", verifyToken, async (req, res) => {
+router.post("/addtodo", 
+  verifyToken, 
+  async (req, res) => {
   const { title, description } = req.body;
-  qry = "INSERT INTO tasks (user_id, title, description) VALUES (?, ?, ?)";
+  const status = 'pending';  
+  const qry = "INSERT INTO tasks (user_id, title, description, status) VALUES (?, ?, ?, ?)";
   try {
-    const [result] = await db.execute(qry, [req.user.id, title, description]);
+    const [result] = await db.execute(qry, [req.user.id, title, description, status]);
     res.status(201).json({
       message: "Task created successfully",
       taskId: result.insertId,
@@ -57,11 +60,11 @@ router.get("/gettodosbyuid/:user_id", verifyToken, async (req, res) => {
 // update task
 router.put("/updatetodo:id", verifyToken, async (req, res) => {
   const { id } = req.params;
-  const { title, description } = req.body;
+  const { title, description, status } = req.body; 
   try {
     await db.execute(
-      "UPDATE tasks SET title = ?, description = ? WHERE id = ? AND user_id = ?",
-      [title, description, id, req.user.id]
+      "UPDATE tasks SET title = ?, description = ?, status = ? WHERE id = ? AND user_id = ?",
+      [title, description, status, id, req.user.id]
     );
     res.json({ message: "Task updated successfully" });
   } catch (error) {
