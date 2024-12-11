@@ -1,6 +1,3 @@
-backend -> mysql2
-frontend -> create
-
 backend : nodemon server.js
 frontend : npm start
 
@@ -33,19 +30,3 @@ CREATE TABLE tasks (
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
-
-
-
-echo "# NodeJSBackendJwtCRUD" >> README.md
-git init
-git add README.md
-git commit -m "first commit"
-git branch -M main
-git remote add origin https://github.com/1Deepak007/NodeJSBackendJwtCRUD.git
-git push -u origin main
-
-
-
-git remote add origin https://github.com/1Deepak007/NodeJSBackendJwtCRUD.git
-git branch -M main
-git push -u origin main
